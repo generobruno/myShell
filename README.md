@@ -146,4 +146,6 @@ A continuación se listan los distintos bugs o errores que el programa en cuesti
     <li> Al ejecutar el comando cd para ir hacia una carpeta, la misma no puede contener espacios ya que, por la forma en que se tokeniza la línea de entrada, estos no serán reconocidos.
     <li> Si corremos un comando de myShell en background también se intentará correr con execvp().
     <li> MyShell no soporta correr más de 2 procesos en fondo.
+    <li> No se pueden ejecutar los comandos de pipe y redirección al mismo tiempo.
+    <li> No se soportan más de 2 pipes.
 </ul>
