@@ -7,17 +7,17 @@
 
 ## <u> Índice </u>
 
-1. [Introducción](INFORME.md#L20)
-2. [Lector (Reader)](INFORME.md#L43)
-3. [Analizador (Parser)](INFORME.md#L57)
-4. [Ejecutor (Executer)](INFORME.md#L87)
-5. [Bucle Principal (Main Loop)](INFORME.md#L102)
-6. [MyShell (main)](INFORME.md#L106)
-7. [Signal Handling](INFORME.md#L116)
-8. [Pipes](INFORME.md#L121)
-9. [I/O Redirection](INFORME.md#L126)
-10. [Otras Funciones](INFORME.md#L130)
-11. [Errores Conocidos](INFORME.md#L141)
+1. [Introducción](README.md#L20)
+2. [Lector (Reader)](README.md#L43)
+3. [Analizador (Parser)](README.md#L57)
+4. [Ejecutor (Executer)](README.md#L87)
+5. [Bucle Principal (Main Loop)](README.md#L102)
+6. [MyShell (main)](README.md#L106)
+7. [Signal Handling](README.md#L116)
+8. [Pipes](README.md#L121)
+9. [I/O Redirection](README.md#L126)
+10. [Otras Funciones](README.md#L130)
+11. [Errores Conocidos](README.md#L141)
 
 
 ## <u> Introducción </u>
@@ -63,10 +63,10 @@ El lector (o Reader) es el componente encargado de tomar el texto ingresado para
     <li> mainLoop
 </ul>
 
-El primer archivo ([readLine.c](readLine.c)) se encarga de leer una línea de texto que ingresemos por consola (stdin), carácter por carácter, y devuelve un puntero a *char* (char *) el cual es el string o linea ingresada por stdin hasta un espacio (o EOF).
+El primer archivo ([readLine.c](src/reader/readLine.c)) se encarga de leer una línea de texto que ingresemos por consola (stdin), carácter por carácter, y devuelve un puntero a *char* (char *) el cual es el string o linea ingresada por stdin hasta un espacio (o EOF).
 
-El segundo archivo ([mainLoop.c](mainLoop.c)) es donde se ejecuta el componente principal del mismo nombre que corre todas las funciones para que myShell funcione. En relacion al lector, la [línea 49](mainLoop.c#L49) del Loop Principal ejecuta la función *readLine*. 
-Otra función relacionada a este componente es [readScript](mainLoop.c#L92), que se encarga de leer un archivo .txt que le pasemos como argumento a myShell cuando le ejecutemos (./lab4 script.txt). La misma toma como parámetros la variable *line* donde se guardará la línea leída, el nombre del archivo a leer (*argv*), y el archivo a leer (*file*). Además, sólo se [ejecuta](mainLoop.c#L46) si le pasamos como argumento un .txt. Finalmente, cabe recalcar que las lineas de este archivo son [filtradas](filterScript.c) para que cumplan con el formato que usa el analizador.
+El segundo archivo ([mainLoop.c](src/main/mainLoop.c)) es donde se ejecuta el componente principal del mismo nombre que corre todas las funciones para que myShell funcione. En relacion al lector, la [línea 49](src/main/mainLoop.c#L49) del Loop Principal ejecuta la función *readLine*. 
+Otra función relacionada a este componente es [readScript](src/main/mainLoop.c#L92), que se encarga de leer un archivo .txt que le pasemos como argumento a myShell cuando le ejecutemos (./lab5 script.txt). La misma toma como parámetros la variable *line* donde se guardará la línea leída, el nombre del archivo a leer (*argv*), y el archivo a leer (*file*). Además, sólo se [ejecuta](src/main/mainLoop.c#L46) si le pasamos como argumento un .txt. Finalmente, cabe recalcar que las lineas de este archivo son [filtradas](src/parser/filterScript.c) para que cumplan con el formato que usa el analizador.
 
 ## <u> Analizador </u>
 
@@ -80,11 +80,11 @@ Este componente (también llamado Parser) se encarga de tomar la salida del Lect
     <li> mainLoop
 </ul>
 
-El [primer archivo](parser.c) contiene la función *parse_line* que toma como parámetros la línea o string leido por el Lector (char *line), y un array de strings (o puntero a un puntero de carácteres) donde se guardaran las palabras de la linea tokenizadas o separadas (char **parsed). La función ejecuta un comando si es posible, devolviendo un 0, o en caso contrario retorna un 1.
+El [primer archivo](src/parser/parser.c) contiene la función *parse_line* que toma como parámetros la línea o string leido por el Lector (char *line), y un array de strings (o puntero a un puntero de carácteres) donde se guardaran las palabras de la linea tokenizadas o separadas (char **parsed). La función ejecuta un comando si es posible, devolviendo un 0, o en caso contrario retorna un 1.
 
-La función de [parseSpace](parseSpace.c) es la de separar las palabras de line por espacios e ir agregandolas al array "parsed". Por otro lado, el método [parseBackground](parseBackground.c) analiza si la linea contiene el carácter "&" al final y retorna un 1 en ese caso. Esto sirve para luego hacer que el executer realice la tarea encomendada en el fondo.
+La función de [parseSpace](src/parser/parseSpace.c) es la de separar las palabras de line por espacios e ir agregandolas al array "parsed". Por otro lado, el método [parseBackground](src/parser/parseBackground.c) analiza si la linea contiene el carácter "&" al final y retorna un 1 en ese caso. Esto sirve para luego hacer que el executer realice la tarea encomendada en el fondo.
 
-El [cmdHandler](cmdHandler.c) se encarga de ejecutar los distintos comandos soportados por myShell y definidos en el mismo archivo/función. Para esto, se le pasa como argumento la lista de "parsed" y se revisa si la primera palabra coincide con alguno de los comandos. En caso afirmativo, ejecuta su función y retorna 1. En caso contrario retorna con 0. Los comandos y sus respectivas funciones son las siguientes:
+El [cmdHandler](src/parser/cmdHandler.c) se encarga de ejecutar los distintos comandos soportados por myShell y definidos en el mismo archivo/función. Para esto, se le pasa como argumento la lista de "parsed" y se revisa si la primera palabra coincide con alguno de los comandos. En caso afirmativo, ejecuta su función y retorna 1. En caso contrario retorna con 0. Los comandos y sus respectivas funciones son las siguientes:
 
 <ol>
     <li> <u> cd:</u> Cambia al directorio que le pasemos como argumento. En caso de pasar como argumento "-" vuelve al directorio en el que se estaba trabajando anteriormente.
@@ -94,7 +94,7 @@ El [cmdHandler](cmdHandler.c) se encarga de ejecutar los distintos comandos sopo
     <li> <u> help</u> Muestra por pantalla las distintos comandos posibles.
 </ol>
 
-Finalmente, en la función del [bucle principal](mainLoop.c#L53), se ejecuta la función de parse_line y se guarda su valor de retorno en la variable *execFlag*, la cual servirá al Ejecutor para decidir como correr los argumentos que se hayan analizado y guardado en la variable *parsedArgs*, los cuales son los de *parsed* en la función parse_line.
+Finalmente, en la función del [bucle principal](src/main/mainLoop.c#L53), se ejecuta la función de parse_line y se guarda su valor de retorno en la variable *execFlag*, la cual servirá al Ejecutor para decidir como correr los argumentos que se hayan analizado y guardado en la variable *parsedArgs*, los cuales son los de *parsed* en la función parse_line.
 
 
 ## <u> Ejecutor </u>
@@ -106,9 +106,9 @@ El ejecutor decide de que manera correr los programas pasados como argumentos, g
     <li> mainLoop
 </ul>
 
-En caso de que no se quiera ejecutar un comando en el fondo, y si tampoco se puede ejecutar alguno de los comandos soportados por myShell, la función parse_line devolverá un 1. Este valor toma el nombre de *execFlag* en el bucle principal. Entonces, se hace un [switch](mainLoop.c#L56) y dependiendo del valor de esa variable se ejecuta de una u otra manera.
+En caso de que no se quiera ejecutar un comando en el fondo, y si tampoco se puede ejecutar alguno de los comandos soportados por myShell, la función parse_line devolverá un 1. Este valor toma el nombre de *execFlag* en el bucle principal. Entonces, se hace un [switch](src/main/mainLoop.c#L56) y dependiendo del valor de esa variable se ejecuta de una u otra manera.
 
-En el caso de arriba (execFlag = 1) se ejecuta la función [execSimple](execSimple.c), la que se encarga de crear un proceso hijo (de lab4) a partir de los argumentos que le pasamos como parámetro (char **parsed). Para esto, utilizamos la función *fork()*. Esta crea un proceso hijo a partir del padre, con el mismo código que el del último, pero retorna el valor 0 en el caso del hijo y el pid (process identificator) en el padre. De esta manera, se hace que el [hijo](execSimple.c#L24) ejecute lo que se le haya pasado como argumento (parsed[0]: Nombre del programa a ejecutar) y el [padre](execSimple.c#L29) espere a que éste termine de correr el programa indicado. Esto último se hace con la función *wait(NULL)*.
+En el caso de arriba (execFlag = 1) se ejecuta la función [execSimple](src/executer/execSimple.c), la que se encarga de crear un proceso hijo (de lab5) a partir de los argumentos que le pasamos como parámetro (char **parsed). Para esto, utilizamos la función *fork()*. Esta crea un proceso hijo a partir del padre, con el mismo código que el del último, pero retorna el valor 0 en el caso del hijo y el pid (process identificator) en el padre. De esta manera, se hace que el [hijo](src/executer/execSimple.c#L24) ejecute lo que se le haya pasado como argumento (parsed[0]: Nombre del programa a ejecutar) y el [padre](src/executer/execSimple.c#L29) espere a que éste termine de correr el programa indicado. Esto último se hace con la función *wait(NULL)*.
 
 Por otro lado, cuando queremos ejecutar un proceso en background (execFlag = 3), se ejecuta la función [execBackground](mainLoop.c#L129), la cual es similar a execSimple, solo que en este caso el padre sigue corriendo hasta que llega la señal **SIGCHLD** indicando que su hijo terminó su ejecución. En ese momento, el proceso padre ejecuta la función [childSignalHandler](mainLoop.c#L159) para cosechar el proceso zombie del hijo muerto, y luego seguir con su ejecución.
 
