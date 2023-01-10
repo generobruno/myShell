@@ -22,6 +22,13 @@
 
 ## <u> Introducción </u>
 
+Para realizar el build del proyecto hay que posicionarse en la carpeta donde este el mismo y escribir los siguientes comandos:
+
+```
+make lab5   # Build
+./lab5      # Execute
+```
+
 El objetivo de este trabajo era el de realizar una shell básica con código C. Dicha tarea busca que, mediante se desarrollo, se realicen los siguientes puntos:
 
 <ul>
