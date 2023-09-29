@@ -1,9 +1,7 @@
 
 # <b><u> myShell </u></b>
 
-#### Autor: Bruno A. Genero
-
-#### Fecha: 30/09/22
+![image](https://github.com/generobruno/myShell/assets/36767810/e9441999-fe8a-4ad3-a65a-a6177c9a5463)
 
 ## <u> Índice </u>
 
