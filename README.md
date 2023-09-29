@@ -3,21 +3,6 @@
 
 ![image](https://github.com/generobruno/myShell/assets/36767810/e9441999-fe8a-4ad3-a65a-a6177c9a5463)
 
-## <u> Índice </u>
-
-1. [Introducción](README.md#L20)
-2. [Lector (Reader)](README.md#L43)
-3. [Analizador (Parser)](README.md#L57)
-4. [Ejecutor (Executer)](README.md#L87)
-5. [Bucle Principal (Main Loop)](README.md#L102)
-6. [MyShell (main)](README.md#L106)
-7. [Signal Handling](README.md#L116)
-8. [Pipes](README.md#L121)
-9. [I/O Redirection](README.md#L126)
-10. [Otras Funciones](README.md#L130)
-11. [Errores Conocidos](README.md#L141)
-
-
 ## <u> Introducción </u>
 
 Para realizar el build del proyecto hay que posicionarse en la carpeta donde este el mismo y escribir los siguientes comandos:
